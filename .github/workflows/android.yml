@@ -39,7 +39,7 @@ jobs:
           # If your PC is Windows, use port 3389, otherwise use port 22 for SSH
           PC_PORT=3389
           PC_TIMEOUT=1500
-          CERTIFICATE_FILENAME=\"<SSL certificate in p12 format>\"
+          CERTIFICATE_FILENAME=\"<SSL certificate in p12 format>\"" > local.properties
 
       - name: Build with Gradle
         run: ./gradlew assembleRelease
