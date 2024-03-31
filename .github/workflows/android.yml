@@ -1,0 +1,48 @@
+name: Build Android App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+
+      - name: Set up Android SDK
+        uses: actions/setup-android@v2
+        with:
+          sdk-version: '30.0.3'
+
+      - name: Add custom properties to local.properties
+        run: |
+          echo "# Cloudflare
+          CF_API_KEY=\"<Cloudflare API Token>\"
+          CF_EMAIL=\"<Cloudflare Email>\"
+          ZONE_ID=\"<Cloudflare DNS Zone ID>\"
+          RECORD_ID=\"<Cloudflare DNS Record ID>\"
+          # Telegram Bot
+          BOT_TOKEN=\"<Your Telegram Bot Token>\"
+          CHAT_ID=\"<Your Telegram Chat ID to receives notifications>\"
+          # Web server
+          WEB_PORT=8443
+          PC_MAC=\"<PC ethernet MAC>\"
+          PC_IP=\"<PC static IP address>\"
+          # If your PC is Windows, use port 3389, otherwise use port 22 for SSH
+          PC_PORT=3389
+          PC_TIMEOUT=1500
+          CERTIFICATE_FILENAME=\"<SSL certificate in p12 format>\"
+          
